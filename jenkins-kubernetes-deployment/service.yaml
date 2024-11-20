@@ -3,10 +3,10 @@ kind: Service
 metadata:
   #The name of the Kubernetes Service to be created 
   #in the Kubernetes cluster
-  name: service 
+  name: smart-ui-service 
 spec:
   selector:
-    app: react-app 
+    app: smart-ui 
   type: ClusterIP #Type of the Kubernetes Service
   ports:
   - protocol: TCP

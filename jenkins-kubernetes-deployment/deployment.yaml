@@ -4,21 +4,21 @@ metadata:
   name: deployment #The name of the Kubernetes 
         #Deployment to be created in the Kubernetes cluster
   labels:
-    app: react-app
+    app: smart-ui
 spec:
   replicas: 1 #The number of pods to be created in the 
    #Kubernetes cluster for the React.js application container
   selector:
     matchLabels:
-      app: react-app
+      app: smart-ui
   template:
     metadata:
       labels:
-        app: react-app 
+        app: smart-ui 
     spec:
       containers:
-      - name: react-app #The name of the react.js application container
+      - name: smart-ui #The name of the react.js application container
         #The Docker image for building the React.js application container
-        image: bravinwasike/react-app:latest  
+        image: iamlavityagi/smart-ui:latest  
         ports:
         - containerPort: 3000 #The port for the React.js application container

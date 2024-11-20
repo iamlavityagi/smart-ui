@@ -1,6 +1,6 @@
 pipeline {
   environment {
-    dockerimagename = "bravinwasike/react-app"
+    dockerimagename = "iamlavityagi:smart-ui:latest"
     dockerImage = ""
   }
   agent any
