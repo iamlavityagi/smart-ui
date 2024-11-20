@@ -3,6 +3,7 @@ kind: Deployment
 metadata:
   name: deployment #The name of the Kubernetes 
         #Deployment to be created in the Kubernetes cluster
+  namspace: smart-ui      
   labels:
     app: smart-ui
 spec:

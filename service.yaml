@@ -4,6 +4,7 @@ metadata:
   #The name of the Kubernetes Service to be created 
   #in the Kubernetes cluster
   name: smart-ui-service 
+  namspace: smart-ui
 spec:
   selector:
     app: smart-ui 
