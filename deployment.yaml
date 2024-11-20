@@ -16,10 +16,13 @@ spec:
     metadata:
       labels:
         app: smart-ui 
+      annotations:
+        kubernetes.io/change-cause: "Updated deployment"  
     spec:
       containers:
       - name: smart-ui #The name of the react.js application container
         #The Docker image for building the React.js application container
-        image: iamlavityagi/smart-ui:latest  
+        image: iamlavityagi/smart-ui:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 3000 #The port for the React.js application container
