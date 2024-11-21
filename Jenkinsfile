@@ -43,12 +43,12 @@ pipeline {
                     def deploymentName = sh(script: "grep 'name:' deployment.yaml | awk '{print \$2}' | head -1", returnStdout: true).trim()
                     
                     // Extract the namespace dynamically from the YAML file (fallback to 'default' if not found)
-                    def namespace = sh(script: "grep 'namespace:' k8s/deployment.yaml | awk '{print \$2}' | head -1", returnStdout: true).trim()
+                    def namespace = sh(script: "grep 'namespace:' deployment.yaml | awk '{print \$2}' | head -1", returnStdout: true).trim()
                     namespace = namespace ? namespace : "default"
                     
                     // Apply the deployment YAML
-                    sh 'kubectl apply -f k8s/deployment.yaml'
-                    sh 'kubectl apply -f k8s/service.yaml'
+                    sh 'kubectl apply -f deployment.yaml'
+                    sh 'kubectl apply -f service.yaml'
                     
                     // Force the deployment restart dynamically
                     echo "Restarting deployment: ${deploymentName} in namespace: ${namespace}"
