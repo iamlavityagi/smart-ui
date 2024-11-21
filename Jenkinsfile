@@ -7,12 +7,16 @@ pipeline {
   stages {
     stage('Checkout Source') {
       steps {
-        git 'https://github.com/iamlavityagi/smart-ui.git'
+		script {
+            echo 'Checking out source code...'
+            git 'https://github.com/iamlavityagi/smart-ui.git'
+        }
       }
     }
     stage('Build image') {
       steps{
         script {
+		  echo 'Building Docker image...'	
           dockerImage = docker.build dockerimagename
         }
       }
@@ -23,6 +27,7 @@ pipeline {
            }
       steps{
         script {
+		  echo 'Pushing Docker image to Docker Hub...'
           docker.withRegistry( 'https://registry.hub.docker.com', registryCredential ) {
             dockerImage.push("latest")
           }
@@ -33,6 +38,7 @@ pipeline {
       steps {
         script {
           script {
+			echo 'Deploying to Kubernetes...'
 			sh 'kubectl apply -f deployment.yaml'
 			sh 'kubectl apply -f service.yaml'
 			}
@@ -40,4 +46,18 @@ pipeline {
       }
     }
   }
+  post {
+        always {
+            script {
+                echo 'Cleaning up local Docker image...'
+                sh "docker rmi ${dockerimagename} || true"
+            }
+        }
+        success {
+            echo 'Pipeline executed successfully!'
+        }
+        failure {
+            echo 'Pipeline failed. Please check the logs.'
+        }
+    }
 }
