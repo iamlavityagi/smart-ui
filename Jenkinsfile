@@ -39,8 +39,16 @@ pipeline {
         script {
           script {
 			echo 'Deploying to Kubernetes...'
-			sh 'kubectl apply -f deployment.yaml'
-			sh 'kubectl apply -f service.yaml'
+                    // Extract the deployment name dynamically from the YAML file
+                    def deploymentName = sh(script: "grep 'name:' deployment.yaml | awk '{print \$2}' | head -1", returnStdout: true).trim()
+                    
+                    // Apply the deployment YAML
+                    sh 'kubectl apply -f deployment.yaml'
+                    sh 'kubectl apply -f service.yaml'
+                    
+                    // Force the deployment restart dynamically
+                    echo "Restarting deployment: ${deploymentName}"
+                    sh "kubectl rollout restart deployment/${deploymentName}"
 			}
         }
       }
